@@ -7,6 +7,7 @@ UI Actions for the main view controller.
 
 import UIKit
 import SceneKit
+import SocketIO
 
 extension ViewController: UIGestureRecognizerDelegate {
     
@@ -46,6 +47,15 @@ extension ViewController: UIGestureRecognizerDelegate {
         addObjectButton.setImage(#imageLiteral(resourceName: "addPressed"), for: [.highlighted])
 
         resetTracking()
+        
+        let socket = SocketIOClient(socketURL: URL(string: "https://968148dd.ngrok.io")!, config: [.log(true), .compress])
+        
+        print("CONNECT SOCKET")
+        socket.on(clientEvent: .connect) {data, ack in
+            print("socket connected")
+        }
+        
+        socket.connect()
 
         // Disable restart for a while in order to give the session time to restart.
         DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) {

@@ -8,6 +8,7 @@ Main view controller for the AR experience.
 import ARKit
 import SceneKit
 import UIKit
+import SocketIO
 
 class ViewController: UIViewController {
     
