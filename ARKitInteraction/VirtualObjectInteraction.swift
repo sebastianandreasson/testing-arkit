@@ -9,7 +9,7 @@ import UIKit
 import ARKit
 
 /// - Tag: VirtualObjectInteraction
-class VirtualObjectInteraction: NSObject, UIGestureRecognizerDelegate {
+class VirtualObjectInteraction: NSObject, UIGestureRecognizerDelegate, SocketClientDelegate {
     
     
     /// Developer setting to translate assuming the detected plane extends infinitely.
@@ -42,6 +42,8 @@ class VirtualObjectInteraction: NSObject, UIGestureRecognizerDelegate {
         self.socketClient = SocketClient()
         super.init()
         
+        socketClient.delegate = self
+        
         let panGesture = ThresholdPanGesture(target: self, action: #selector(didPan(_:)))
         panGesture.delegate = self
         
@@ -54,6 +56,13 @@ class VirtualObjectInteraction: NSObject, UIGestureRecognizerDelegate {
         sceneView.addGestureRecognizer(panGesture)
         sceneView.addGestureRecognizer(rotationGesture)
         sceneView.addGestureRecognizer(tapGesture)
+    }
+    
+    func dataReceived(_ position: SCNVector3) {
+        print("position", position)
+        if let object = trackedObject {
+            object.position = position
+        }
     }
     
     // MARK: - Gesture Actions
@@ -169,7 +178,7 @@ class VirtualObjectInteraction: NSObject, UIGestureRecognizerDelegate {
          */
         object.setPosition(position, relativeTo: cameraTransform, smoothMovement: !isOnPlane)
         print("socketclient.sendObject")
-        self.socketClient.sendObject()
+        self.socketClient.sendObject(object: object)
     }
 }
 
