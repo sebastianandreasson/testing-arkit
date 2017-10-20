@@ -30,7 +30,6 @@ class SocketClient {
                 let x = Float(dict["x"] as! Float)
                 let y = Float(dict["y"] as! Float)
                 let z = Float(dict["z"] as! Float)
-                print("dict", dict)
                 
                 let positon = SCNVector3(x: x, y: y, z: z)
                 
@@ -42,8 +41,6 @@ class SocketClient {
     }
     
     public func sendObject(object: VirtualObject) {
-        print("socketclient.sendObject.emit")
-        
         let json = ["x": object.position.x, "y": object.position.y, "z": object.position.z]
         self.socket.emit("object", json)
     }

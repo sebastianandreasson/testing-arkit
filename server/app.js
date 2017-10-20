@@ -16,9 +16,9 @@ io.on('connection', socket => {
 
   socket.on('message', console.log)
   socket.on('object', data => {
-    console.log('socket.on', data)
     sockets.forEach(s => {
       if (s !== socket) {
+        console.log('socket.send.to.other', data)
         s.emit('object', data)
       }
     })

@@ -59,8 +59,8 @@ class VirtualObjectInteraction: NSObject, UIGestureRecognizerDelegate, SocketCli
     }
     
     func dataReceived(_ position: SCNVector3) {
-        print("position", position)
-        if let object = trackedObject {
+        if let object = selectedObject {
+            print("position", position)
             object.position = position
         }
     }
