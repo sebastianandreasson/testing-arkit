@@ -11,6 +11,7 @@ import ARKit
 /// - Tag: VirtualObjectInteraction
 class VirtualObjectInteraction: NSObject, UIGestureRecognizerDelegate {
     
+    
     /// Developer setting to translate assuming the detected plane extends infinitely.
     let translateAssumingInfinitePlane = true
     
@@ -33,9 +34,12 @@ class VirtualObjectInteraction: NSObject, UIGestureRecognizerDelegate {
     
     /// The tracked screen position used to update the `trackedObject`'s position in `updateObjectToCurrentTrackingPosition()`.
     private var currentTrackingPosition: CGPoint?
+    
+    private var socketClient: SocketClient
 
     init(sceneView: VirtualObjectARView) {
         self.sceneView = sceneView
+        self.socketClient = SocketClient()
         super.init()
         
         let panGesture = ThresholdPanGesture(target: self, action: #selector(didPan(_:)))
@@ -164,6 +168,8 @@ class VirtualObjectInteraction: NSObject, UIGestureRecognizerDelegate {
          smooth the movement to prevent large jumps.
          */
         object.setPosition(position, relativeTo: cameraTransform, smoothMovement: !isOnPlane)
+        print("socketclient.sendObject")
+        self.socketClient.sendObject()
     }
 }
 

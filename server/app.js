@@ -12,4 +12,5 @@ io.on('connection', socket => {
   console.log('socket connected', socket)
 
   socket.on('message', console.log)
+  socket.on('object', data => console.log('object', data))
 })

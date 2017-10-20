@@ -3,4 +3,5 @@ use_frameworks!
 
 target 'ARKitInteraction' do
   pod 'Socket.IO-Client-Swift', '~> 12.1.2'
+  pod 'SwiftyJSON', '~> 4.0.0-alpha.1'
 end
